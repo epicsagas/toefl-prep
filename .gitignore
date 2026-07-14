@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.jsonl
+output/
+evals/
+*-workspace/
+practice/
+scratch/
+*.wav
+*.m4a
+*.mp3

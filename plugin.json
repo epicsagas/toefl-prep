@@ -1,0 +1,5 @@
+{
+  "name": "toefl-prep",
+  "version": "0.1.0",
+  "description": "TOEFL 집중 학습 플러그인 — 4주 로드맵 + 로컬 LLM(Ollama) 기반 문제 생성/채점 + whisper.cpp 스피킹 평가. Reading/Listening/Speaking/Writing 4개 영역을 오프라인 로컬 모델로 평가. Claude Code·Codex·agy(Antigravity CLI) 플러그인. 목표 점수 90 (Georgia Tech OMSCS 2027 Spring)."
+}

@@ -1,0 +1,28 @@
+{
+  "name": "toefl-prep",
+  "version": "0.1.0",
+  "description": "TOEFL 4주 집중 학습 — 로컬 LLM(Ollama) 기반 4개 영역 오프라인 채점 + whisper.cpp 스피킹 평가.",
+  "author": {
+    "name": "epicsagas",
+    "url": "https://github.com/epicsagas"
+  },
+  "homepage": "https://github.com/epicsagas/toefl-prep",
+  "repository": "https://github.com/epicsagas/toefl-prep",
+  "license": "MIT",
+  "keywords": ["toefl", "english", "study", "ollama", "whisper", "local-llm"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "toefl-prep",
+    "shortDescription": "TOEFL 4주 집중 학습 + 로컬 LLM 채점",
+    "longDescription": "TOEFL iBT 4주 집중 학습 플러그인. Reading/Listening/Speaking/Writing 4개 영역을 로컬 LLM(Ollama)과 whisper.cpp로 오프라인 평가한다. 4주 로드맵(7/15~8/12) 관리, 로컬 LLM 기반 문제 생성/채점, 점수 히스토리 추적. Georgia Tech OMSCS 2027 Spring 지원(8/15 마감) 대응, 목표 90점.",
+    "developerName": "epicsagas",
+    "category": "Education",
+    "capabilities": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit"
+    ],
+    "websiteURL": "https://github.com/epicsagas/toefl-prep"
+  }
+}
