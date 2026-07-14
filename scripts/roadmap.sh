@@ -39,7 +39,13 @@ path, mode, when = sys.argv[1], sys.argv[2], sys.argv[3]
 try:
     import yaml
     with open(path, encoding="utf-8") as fh:
-        cfg = yaml.safe_load(fh)
+        text = fh.read()
+    # Strip optional YAML frontmatter (--- ... ---) so vault-tagged files parse cleanly.
+    if text.lstrip().startswith("---"):
+        end = text.find("\n---", 3)
+        if end != -1:
+            text = text[end + 4:]
+    cfg = yaml.safe_load(text)
 except ImportError:
     sys.exit("ERROR: PyYAML required. Install: pip3 install pyyaml")
 except Exception as e:
