@@ -1,56 +1,54 @@
 ---
-description: 이번 주 토플 학습 로드맵/과제 표시 — 현재 날짜 기준 4주 일정(7/15~8/12) 중 해당 주차 목표·과제·주간 시간 배분을 안내한다.
-argument-hint: "[week-number|today]"
+description: 이번 주 토플 학습 로드맵/과제 표시 — schedule.yaml에서 사용자가 지정한 학습 기간·요일·시간대·주차별 목표를 읽어 현재 날짜 기준으로 안내한다.
+argument-hint: "[YYYY-MM-DD|week-N]"
 allowed-tools: Bash, Read
 disable-model-invocation: true
 ---
 
-# /toefl-roadmap — 주차별 학습 로드맵
+# /toefl-roadmap — 주차별 학습 로드맵 (사용자 커스텀 일정)
 
-현재 날짜(또는 지정 주차)에 해당하는 토플 학습 목표와 과제를 보여준다.
+`schedule.yaml`에서 학습 계획을 읽어 현재 날짜에 맞는 주차/오늘의 스케줄/시험 D-day를 보여준다.
+**날짜는 하드코딩되지 않는다** — 모두 사용자가 `schedule.yaml`에 설정한다.
 
-## 일정 테이블 (절대 날짜)
+## 스케줄 설정 (최초 1회)
 
-| 주차 | 기간 | 핵심 목표 |
-|------|------|-----------|
-| 1 | 07/15–07/21 | 시스템 파악 + 스피킹/라이팅 만능 템플릿 완벽 암기 |
-| 2 | 07/22–07/28 | 리스닝 올인(노트테이킹 약어 + 매일 강의 2개 딕테이션) + 라이팅 매일 1편 ChatGPT/로컬 채점 |
-| 3 | 07/29–08/04 | 취약 영역 집중(통합형) + Georgia Tech 서류 준비 시작(영문 성적/졸업증명, 추천인 3명) |
-| 4 | 08/05–08/11 | TPO 실전 모의고사 3회 + 영문 이력서/SOP 초안 |
+`schedule.yaml`이 없으면 먼저 생성한다:
+```bash
+PLUGIN=~/.claude/plugins/marketplaces/toefl
+VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
+[[ -f "$VAULT/schedule.yaml" ]] || cp "$PLUGIN/skills/toefl/schedule.example.yaml" "$VAULT/schedule.yaml"
+```
 
-특이 일정:
-- 08/08–08/10: 🚨 토플 시험 마지노선 (Home Edition/시험장) → 8/15 리포팅 확보용
-- 08/15: 🎯 Georgia Tech OMSCS 2027 봄 지원 마감
-
-목표 점수 **90**. 투자: 평일 3시간 / 주말 8시간.
+사용자가 편집할 항목 (`schedule.yaml`):
+- `start_date` / `end_date` — 학습 기간
+- `test_window_start` / `test_window_end` — 시험 마지노선
+- `reporting_deadline` — 성적 리포팅 마감
+- `target_score` / `purpose` — 목표 점수·용도
+- `study_days.weekdays` / `study_days.weekend` — 학습 요일 (원하는 요일만)
+- `hours.weekday` / `hours.weekend` — 요일별 학습 시간
+- `hours.weekday_window` / `hours.weekend_window` — 선호 시간대
+- `weeks: []` — 주차별 focus + tasks (순서 = 주차 순서, start_date 기준 자동 정렬)
 
 ## 실행 단계
 
-1. 인자가 없으면 오늘 날짜로 주차를 계산한다:
+1. 인자 파싱:
+   - 없음 → 오늘 날짜
+   - `YYYY-MM-DD` → 해당 날짜
+   - `week-N` → N주차 대표일(시작일 + (N-1)*7일)로 변환
+2. `roadmap.sh all <date>` 실행:
    ```bash
-   today=$(date +%Y%m%d)
+   "$PLUGIN/scripts/roadmap.sh" all "$date"
    ```
-   - 0715–0721 → 1주차 / 0722–0728 → 2주차 / 0729–0804 → 3주차 / 0805–0811 → 4주차
-   - 0808–0810 겹침 시 "🚨 시험 마지노선 주" 경고 추가.
-2. 해당 주차의 **일일 시간 배분표**(평일/주말)와 **이번 주 체크리스트**를 출력.
-3. `01-Projects/toefl/JOURNAL.md`가 있으면 이번 주 진행도(완료 항목 수)를 함께 표시.
-4. 주차별 추천 명령 안내:
-   - 1주차: `/toefl-practice reading 1` (수능 베이스 점검) + 템플릿 암기
-   - 2주차: `/toefl-grade writing` 매일 1회 + 리스닝 딕테이션
-   - 3주차: `/toefl-drill <weakness>` (통합형 집중)
-   - 4주차: TPO 3회 + `/toefl-status`로 추이 확인
-5. 시험일(8/8)까지 남은 일수와 목표 점수(90) 대비 현재 추정 점수(`SCORES.md` 기반) 갭 표시.
+3. `JOURNAL.md`가 있으면 이번 주 진행도(체크 항목 수)를 추가 표시.
+4. 주차별 추천 명령 안내 (current_week.focus 기반):
+   - 시스템 파악류 focus → `/toefl-practice reading 1` 베이스라인
+   - 라이팅/리스닝 집중 focus → `/toefl-grade writing` 매일
+   - 통합형/취약 focus → `/toefl-drill <weakness>`
+   - 모의고사 focus → TPO + `/toefl-status`
+5. 의존성 안내: `roadmap.sh`는 PyYAML 필요 — 없으면 `pip3 install pyyaml`.
 
-## 출력 예시 형식
+## 정직성 원칙
 
-```
-📅 TOEFL — Week 2 (07/22–07/28) | D-17 to test window
-목표: 리스닝 올인 + 라이팅 실전 연습
-이번 주 체크리스트:
-  [ ] 노트테이킹 약어 체계 확립
-  [ ] 매일 강의 2개 딕테이션 (총 10강의)
-  [ ] 매일 라이팅 1편 → /toefl-grade writing
-  [ ] 주말 모의고사 1세트
-진행도: 3/7일 완료 (JOURNAL.md 기반)
-현재 추정: R 22 / L 18 / S — / W 21 → 총합 추정 61, 목표 90까지 -29
-```
+- `schedule.yaml`에 정의되지 않은 주차/날짜는 "해당 없음"으로 표시, 추정하지 않는다.
+- 시험일이 과거면 D-day를 음수로 표시하고 "시험일 경과" 경고.
+- 목표 점수는 `schedule.yaml`의 값 그대로 표시 (기본값 가정 금지).

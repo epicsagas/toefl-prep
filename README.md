@@ -1,29 +1,23 @@
 # toefl-prep
 
-> TOEFL iBT 4주 집중 학습 플러그인 — Claude Code · Codex · agy(Antigravity CLI) 지원.
+**[English](README.md)** | [한국어](docs/i18n/ko/README.md) | [日本語](docs/i18n/ja/README.md) | [简体中文](docs/i18n/zh-Hans/README.md) | [繁體中文](docs/i18n/zh-Hant/README.md) | [Español](docs/i18n/es/README.md) | [Français](docs/i18n/fr/README.md) | [Deutsch](docs/i18n/de/README.md) | [Português](docs/i18n/pt/README.md) | [Русский](docs/i18n/ru/README.md) | [Italiano](docs/i18n/it/README.md)
 
-Reading / Listening / Speaking / Writing 4개 영역을 **로컬 LLM(Ollama) + whisper.cpp**로 오프라인 평가한다. 외부 API 의존 없이 내 컴퓨터에서 문제 생성부터 채점, 점수 추적까지 전부 처리한다.
+> TOEFL iBT study plugin — **Claude Code · Codex · agy (Antigravity CLI)**. Grades all four sections **fully offline** with a local LLM (Ollama) and whisper.cpp.
 
-## 핵심 일정
+Grade Reading / Listening / Speaking / Writing with no external API — question generation, scoring, and score tracking all run on your machine. The study roadmap is **user-customizable**: set your own dates, study days, time windows, and weekly goals.
 
-| 항목 | 내용 |
-|------|------|
-| 학습 기간 | 2026-07-15 ~ 08-12 (4주, 평일 3h / 주말 8h) |
-| 🚨 시험 마지노선 | 08-08 ~ 08-10 (Home Edition 또는 시험장) |
-| 🎯 지원 마감 | 08-15 (Georgia Tech OMSCS 2027 Spring) |
-| 목표 점수 | **90점** |
+## Features
 
-## 특징
+- **Fully offline grading** — local models only, no API cost or latency, nothing leaves your machine.
+- **Per-section evaluation paths**:
+  - Reading/Listening — LLM answer-checking + rationale citing passage/script lines
+  - Writing — direct ETS 0–5 rubric grading (Content / Organization / Language / Mechanics)
+  - Speaking — whisper.cpp transcription → LLM rubric (Delivery / Language Use / Topic Development)
+- **Customizable roadmap** — `schedule.yaml` drives dates, study days, hours, and weekly goals. Nothing is hardcoded.
+- **Score tracking** — section history for weakness diagnosis and focused drilling.
+- **3-host support** — Claude Code (slash commands), Codex, agy (script-driven workflow).
 
-- **완전 오프라인 평가**: 모든 채점을 로컬 모델로 수행. 외부 API 비용/지연 없음.
-- **4개 영역 통합**: 각 영역 특성에 맞춘 평가 경로.
-  - Reading/Listening — LLM 정답 검수 + 오답 근거(지문/스크립트 인용) 추출
-  - Writing — ETS 0–5점 루브릭 직접 채점 (Content/Org/Language/Mechanics)
-  - Speaking — whisper.cpp 전사 → LLM 루브릭 (Delivery/Language Use/Topic Development)
-- **4주 로드맵**: 주차별 목표·체크리스트 자동 안내.
-- **점수 추적**: 영역별 히스토리로 약점 진단 및 딥 드릴.
-
-## 설치
+## Install
 
 ### Claude Code
 
@@ -32,73 +26,88 @@ Reading / Listening / Speaking / Writing 4개 영역을 **로컬 LLM(Ollama) + w
 /plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy(Antigravity)
+### Codex / agy
 
-repo를 clone 후 각 호스트의 플러그인 디렉토리로 심볼릭링크 또는 복사:
+Clone into the host's plugin directory:
+
 ```bash
 git clone https://github.com/epicsagas/toefl-prep
 # Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy: ~/.agy/plugins/toefl-prep -> clone
+# agy:   ~/.agy/plugins/toefl-prep -> clone
 ```
 
-## 사전 요구사항
+## Prerequisites
 
 ```bash
-# 1. Ollama (LLM 평가/문제 생성)
+# 1. Ollama (LLM grading / question generation)
 brew install ollama
 ollama serve &
-ollama pull qwen2.5:7b-instruct   # 추천 (M2 16GB 최적, ~4.7GB, 영어 채점 최상위)
-# 또는 폴백: ollama pull llama3.1:8b
+ollama pull qwen2.5:7b-instruct   # recommended (best English grading on M-series 16GB)
+# fallback: ollama pull llama3.1:8b
 
-# 2. whisper.cpp (스피킹 STT)
+# 2. whisper.cpp (speaking STT)
 brew install whisper-cpp
 mkdir -p ~/.local/share/whisper
 curl -L https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin \
   -o ~/.local/share/whisper/ggml-base.en.bin
 
-# 3. ffmpeg (오디오 정규화, 권장)
+# 3. ffmpeg (audio normalization, recommended) + PyYAML (roadmap)
 brew install ffmpeg
+pip3 install pyyaml
 ```
 
-스크립트가 모델을 자동 선택하지만(qwen2.5:7b 우선, llama3.1:8b 폴백), 미설치 시 설치 명령을 안내한다.
+Scripts auto-select models (qwen2.5:7b preferred, llama3.1:8b fallback) and surface install hints when missing.
 
-## 사용 (Claude Code)
+## Set your schedule
 
-| 명령 | 설명 |
-|------|------|
-| `/toefl-roadmap` | 현재 주차 학습 목표/과제 |
-| `/toefl-practice [section] [n]` | TOEFL 유형 문제 생성 |
-| `/toefl-grade [section] [file]` | 답안/녹음 채점 → SCORES.md 누적 |
-| `/toefl-drill [weakness]` | 취약 영역 집중 반복 |
-| `/toefl-status` | 진행률 + 점수 추이 + 목표 갭 |
+On first run, create your plan from the template:
 
-> Codex/agy는 SKILL.md의 "의도 → 액션 매핑"을 따라 동일한 스크립트를 직접 호출한다.
+```bash
+VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
+cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
+# edit: start_date, test_window_*, study_days, hours, target_score, weeks
+```
 
-## 데이터 저장
+Everything the roadmap shows comes from `schedule.yaml`.
 
-기본 `~/workspace/SecondBrain/01-Projects/toefl/` (환경변수 `TOEFL_VAULT_DIR`로 오버라이드).
+## Usage (Claude Code)
 
-## 한계 (정직성)
+| Command | Description |
+|---------|-------------|
+| `/toefl-roadmap` | Current week's goals & today's plan |
+| `/toefl-practice [section] [n]` | Generate TOEFL-style questions |
+| `/toefl-grade [section] [file]` | Grade answer/recording → accumulate in SCORES.md |
+| `/toefl-drill [weakness]` | Focused repetition on weak areas |
+| `/toefl-status` | Progress + score trend + gap to target |
 
-- **스피킹 발음**: whisper.cpp 전사 품질은 발음의 *간접* 지표. 실제 발음/억양/강세 미평가.
-- **로컬 LLM 채점**: 7–8b급 모델은 ETS 공인 채점과 절대적 차이. 연습용 추정치 — 실전은 TPO로 검증.
-- **리스닝 실전**: 오디오 재생은 사용자 환경 책임. 플러그인은 스크립트+문제만 제공.
+> Codex/agy follow SKILL.md's intent→action mapping, calling the same scripts directly.
 
-## 구조
+## Honest limitations
+
+- **Speaking pronunciation**: whisper.cpp transcript clarity is an *indirect* proxy. True accent/prosody are not measured.
+- **Local LLM grading**: 7–8B models differ absolutely from ETS official scoring. Practice estimate — validate with TPO for the real baseline.
+- **Listening playback**: audio playback is the user's responsibility. The plugin provides scripts + questions only.
+
+## Project structure
 
 ```
 toefl-prep/
-├── plugin.json                 # agy 직접 로드용
-├── .claude-plugin/             # Claude Code (marketplace + plugin manifest)
+├── plugin.json                 # agy direct-load
+├── .claude-plugin/             # Claude Code (marketplace + manifest)
 ├── .codex-plugin/              # Codex
-├── skills/toefl/SKILL.md       # 권위적 워크플로 (모든 호스트 공유)
-├── commands/                   # Claude Code 슬래시 명령 (5개)
-├── scripts/                    # config.sh, llm_eval.sh, stt_transcribe.sh
-├── rubrics/                    # reading/listening/speaking/writing (ETS 기반)
-├── AGENTS.md                   # 3사 공통 에이전트 지침
-└── README.{md,en.md}
+├── skills/toefl/SKILL.md       # authoritative workflow (shared by all hosts)
+│   └── schedule.example.yaml   # roadmap template
+├── commands/                   # Claude Code slash commands (5)
+├── scripts/                    # config.sh, llm_eval.sh, stt_transcribe.sh, roadmap.sh
+├── rubrics/                    # reading/listening/speaking/writing (ETS-aligned)
+├── docs/i18n/                  # 10-language README
+└── AGENTS.md                   # shared agent guidance
 ```
 
-## 라이선스
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). English `README.md` is the source of truth — translations must not get ahead of it.
+
+## License
 
 MIT

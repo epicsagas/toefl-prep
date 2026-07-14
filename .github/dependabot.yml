@@ -1,0 +1,9 @@
+version: 2
+updates:
+  # This plugin has no runtime dependencies (scripts only).
+  # Dependabot is configured for GitHub Actions in .github/workflows/ when added.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5

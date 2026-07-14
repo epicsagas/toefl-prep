@@ -1,0 +1,33 @@
+name: smoke-test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install PyYAML
+        run: pip3 install pyyaml
+      - name: Validate plugin manifests
+        run: |
+          set -e
+          for f in plugin.json .claude-plugin/marketplace.json .claude-plugin/plugin.json .codex-plugin/plugin.json; do
+            python3 -c "import json; json.load(open('$f')); print('OK: $f')"
+          done
+      - name: Bash syntax check
+        run: |
+          for f in scripts/*.sh; do bash -n "$f" && echo "OK: $f"; done
+      - name: Roadmap dry-run
+        run: |
+          mkdir -p /tmp/vault
+          cp skills/toefl/schedule.example.yaml /tmp/vault/schedule.yaml
+          TOEFL_VAULT_DIR=/tmp/vault scripts/roadmap.sh all 2026-07-15
+          TOEFL_VAULT_DIR=/tmp/vault scripts/roadmap.sh json 2026-07-22 | python3 -c "import json,sys; json.load(sys.stdin)"

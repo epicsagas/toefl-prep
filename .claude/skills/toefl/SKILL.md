@@ -17,18 +17,25 @@ description: >
 >
 > **호스트별 워크플로**: Claude Code는 `commands/`의 슬래시 명령(`/toefl-roadmap` 등)을 직접 쓴다. Codex/agy는 아래 "의도 → 액션 매핑" 표를 따라 동일한 스크립트를 직접 호출한다 — 아래 각 영역별 명령 박스의 bash 블록이 호스트 중립적 진실 원천이다.
 
-## 핵심 일정 (절대 날짜)
+## 학습 일정 (사용자 커스텀)
 
-| 기간 | 주차 | 목표 |
-|------|------|------|
-| 7/15–7/21 | 1주차 | 시스템 파악 + 스피킹/라이팅 템플릿 암기 |
-| 7/22–7/28 | 2주차 | 리스닝 올인 + 라이팅 실전 연습 |
-| 7/29–8/4  | 3주차 | 취약 영역 집중 보완 + 지원 서류 준비 시작 |
-| 8/5–8/11  | 4주차 | 실전 모의고사(TPO) 3회 + 영문 이력서 |
-| 8/8–8/10  | —    | 🚨 토플 시험 마지노선 (Home Edition/시험장) |
-| 8/15      | —    | 🎯 Georgia Tech OMSCS 2027 봄 지원 마감 |
+날짜·요일·시간대·목표는 **하드코딩되지 않는다**. 모두 `${TOEFL_VAULT_DIR}/schedule.yaml`에서
+사용자가 설정한다 (`skills/toefl/schedule.example.yaml`이 템플릿).
 
-목표 점수 **90점**. 평일 3시간 / 주말 8시간 투입.
+- `start_date` / `end_date` / `test_window_*` / `reporting_deadline` — 타임라인
+- `study_days.weekdays` / `study_days.weekend` — 학습 요일 (원하는 요일만 나열)
+- `hours.weekday` / `hours.weekend` / `*_window` — 요일별 시간·선호 시간대
+- `target_score` / `purpose` — 목표 점수·용도
+- `weeks: []` — 주차별 focus + tasks (start_date 기준 자동 정렬)
+
+현재 주차/D-day/오늘 스케줄은 `scripts/roadmap.sh`가 계산:
+```bash
+scripts/roadmap.sh all [YYYY-MM-DD]   # 요약
+scripts/roadmap.sh json               # {week, dday_test, today_hours, target_score, current_week...}
+```
+의존성: PyYAML (`pip3 install pyyaml`). schedule.yaml이 없으면 roadmap.sh가 설치 안내를 출력한다.
+
+> 예시 기본값(Georgia Tech OMSCS 2027 Spring)이 템플릿에 들어있으나, 사용자가 자유롭게 변경한다.
 
 ## 의도 → 액션 매핑
 

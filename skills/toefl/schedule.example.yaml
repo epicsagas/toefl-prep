@@ -1,0 +1,53 @@
+# TOEFL study schedule — user-editable.
+# This is the single source of truth for /toefl-roadmap and /toefl-status.
+# Edit the dates, days, hours, and weekly goals to fit your plan.
+# Path: ${TOEFL_VAULT_DIR}/schedule.yaml (default: ~/workspace/SecondBrain/01-Projects/toefl/schedule.yaml)
+
+# --- Timeline (ISO dates) ---
+start_date: "2026-07-15"      # first study day (Week 1 day 1)
+end_date: "2026-08-11"        # last study day (end of final week)
+test_window_start: "2026-08-08"
+test_window_end: "2026-08-10"
+reporting_deadline: "2026-08-15"  # score must reach the school by this date
+
+# --- Goal ---
+target_score: 90
+purpose: "Georgia Tech OMSCS 2027 Spring admission"
+
+# --- Study days & time blocks (24h, local time) ---
+# List the weekday names you study and the hours per day.
+# `weekdays` hours apply to Mon–Fri you mark available; `weekend` to Sat/Sun.
+study_days:
+  weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri"]   # remove a day if you don't study it
+  weekend: ["Sat", "Sun"]
+hours:
+  weekday: 3      # hours per weekday study session
+  weekend: 8      # hours per weekend day
+  # Optional preferred time windows (free text, shown in roadmap)
+  weekday_window: "퇴근 후 20:00–23:00"
+  weekend_window: "09:00–17:00 (휴식 포함)"
+
+# --- Weekly goals (one entry per week; auto-aligned to start_date) ---
+# `focus` is the headline; `tasks` is the checklist. Keep order = week order.
+weeks:
+  - week: 1
+    focus: "시스템 파악 + 스피킹/라이팅 템플릿 암기"
+    tasks:
+      - "리딩: 실전 모의고사 1회 + 유형 분석 (베이스라인)"
+      - "스피킹/라이팅: 만능 템플릿 완벽 암기"
+      - "출퇴근: 보카 앱 눈으로 암기"
+  - week: 2
+    focus: "리스닝 올인 + 라이팅 실전 연습"
+    tasks:
+      - "리스닝: 노트테이킹 약어 훈련 + 매일 강의 2개 딕테이션"
+      - "라이팅: 매일 1편 작성 후 /toefl-grade writing"
+  - week: 3
+    focus: "취약 영역 집중 보완 + 지원 서류 준비 시작"
+    tasks:
+      - "리스닝/스피킹 통합형 문제 집중 반복"
+      - "지원 서류: 영문 성적/졸업증명서 발급, 추천인 3명 확정"
+  - week: 4
+    focus: "실전 모의고사(TPO) 풀셋 3회 + 영문 이력서"
+    tasks:
+      - "TPO 실전 모의고사 3회 (화면 독해력·집중력 유지)"
+      - "영문 이력서(Resume) 및 에세이(SOP) 초안 완료"
