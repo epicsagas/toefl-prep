@@ -24,17 +24,14 @@
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/toefl-prep
+claude plugin marketplace add epicsagas/plugins
 claude plugin install epicsagas@toefl-prep
 ```
-
-> `epicsagas/plugins` 스위트 마켓플레이스로도 설치 가능:
-> `claude plugin marketplace add epicsagas/plugins` 후 `claude plugin install epicsagas@toefl-prep`.
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/toefl-prep
+codex plugin marketplace add epicsagas/plugins
 codex plugin add epicsagas@toefl-prep
 ```
 

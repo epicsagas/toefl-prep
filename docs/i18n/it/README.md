@@ -21,19 +21,19 @@ Dalla generazione delle domande alla correzione e al monitoraggio dei punteggi, 
 
 ## Installazione
 
-Tutti e tre gli host si installano dallo stesso marketplace di GitHub (epicsagas/toefl-prep).
+Tutti e tre gli host si installano dallo stesso marketplace di GitHub (epicsagas/plugins).
 
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/toefl-prep
+claude plugin marketplace add epicsagas/plugins
 claude plugin install epicsagas@toefl-prep
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/toefl-prep
+codex plugin marketplace add epicsagas/plugins
 codex plugin add epicsagas@toefl-prep
 ```
 

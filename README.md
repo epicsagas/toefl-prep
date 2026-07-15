@@ -22,17 +22,14 @@ Grade Reading / Listening / Speaking / Writing with no external API — question
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/toefl-prep
+claude plugin marketplace add epicsagas/plugins
 claude plugin install epicsagas@toefl-prep
 ```
-
-> Also available from the `epicsagas/plugins` suite marketplace:
-> `claude plugin marketplace add epicsagas/plugins` then `claude plugin install epicsagas@toefl-prep`.
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/toefl-prep
+codex plugin marketplace add epicsagas/plugins
 codex plugin add epicsagas@toefl-prep
 ```
 
