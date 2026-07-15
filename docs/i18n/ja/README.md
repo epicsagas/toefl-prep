@@ -73,8 +73,8 @@ pip3 install pyyaml
 初回実行時にテンプレートから計画を生成:
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
+DATA="${TOEFL_DATA_DIR:-$HOME/Documents/toefl-prep}"
+cp skills/toefl/schedule.example.yaml "$DATA/schedule.yaml"
 # 編集: start_date, test_window_*, study_days, hours, target_score, weeks
 ```
 

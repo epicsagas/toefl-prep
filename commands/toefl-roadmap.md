@@ -10,16 +10,16 @@ disable-model-invocation: true
 `schedule.yaml`에서 학습 계획을 읽어 현재 날짜에 맞는 주차/오늘의 스케줄/시험 D-day를 보여준다.
 **날짜는 하드코딩되지 않는다** — 모두 사용자가 `schedule.yaml`에 설정한다.
 
-## 스케줄 설정 (최초 1회)
+## 스케줄 설정 (최초 1회 — 사용자 확인 필요)
 
-`schedule.yaml`이 없으면 먼저 생성한다:
-```bash
-PLUGIN=~/.claude/plugins/marketplaces/toefl
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-[[ -f "$VAULT/schedule.yaml" ]] || cp "$PLUGIN/skills/toefl/schedule.example.yaml" "$VAULT/schedule.yaml"
+`schedule.yaml`이 없으면 `roadmap.sh`가 **대화형으로 생성 여부를 물어본다** (TTY 있을 때).
+자동으로 덮어쓰지 않는다. 기본 위치는 OS 문서 폴더 하위:
 ```
+~/Documents/toefl-prep/schedule.yaml   (macOS/Linux; XDG_DOCUMENTS_DIR 우선)
+```
+환경변수 `TOEFL_DATA_DIR`로 다른 위치 지정 가능.
 
-사용자가 편집할 항목 (`schedule.yaml`):
+사용자가 `Y`로 응답하면 템플릿에서 복사 후 안내만 하고 종료 — 값은 사용자가 직접 편집:
 - `start_date` / `end_date` — 학습 기간
 - `test_window_start` / `test_window_end` — 시험 마지노선
 - `reporting_deadline` — 성적 리포팅 마감

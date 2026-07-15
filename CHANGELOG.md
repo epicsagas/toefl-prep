@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-07-15
+
+### Changed
+- Default data location moved to OS Documents folder (`~/Documents/toefl-prep/`), not a hardcoded local vault path. `TOEFL_DATA_DIR` overrides; `TOEFL_VAULT_DIR` kept as a legacy alias.
+- `schedule.yaml` is **never auto-created**. On first run `roadmap.sh` prompts interactively (`Y/n`) before scaffolding from the template. Non-TTY/CI environments get a hint only (exit 2). Linux uses `$XDG_DOCUMENTS_DIR`.
+
+### Fixed
+- Removed all hardcoded `~/workspace/SecondBrain/...` paths from the public repo (config.sh, scripts, commands, SKILL.md, AGENTS.md, all 11 READMEs).
+- Codex/agy install steps corrected to use plugin managers (`codex plugin add`, `agy plugin install`), not manual git-clone — matching the marketplace.json structure.
+
 ## [0.2.0] - 2026-07-15
 
 ### Added

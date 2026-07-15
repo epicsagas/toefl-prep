@@ -59,7 +59,8 @@ disable-model-invocation: true
 2. 각 영역별로:
    ```bash
    date=$(date +%Y-%m-%d)
-   out="$HOME/workspace/SecondBrain/01-Projects/toefl/practice/${date}-${section}-$(date +%H%M).md"
+   out="${TOEFL_DATA_DIR:-$HOME/Documents/toefl-prep}/practice/${date}-${section}-$(date +%H%M).md"
+   mkdir -p "$(dirname "$out")"
    "$EVAL" gen --inline "<위 프롬프트>" "" "$out.gen"
    ```
    - `gen` 모드(temperature 0.7) 사용, 루브릭 불필요(빈 인자).

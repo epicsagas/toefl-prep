@@ -8,7 +8,8 @@
 #   roadmap.sh all [YYYY-MM-DD]       # human-readable summary (default)
 #   roadmap.sh json [YYYY-MM-DD]      # machine-readable JSON
 #
-# Reads ${TOEFL_VAULT_DIR}/schedule.yaml. If missing, prints a setup hint.
+# Reads ${TOEFL_DATA_DIR}/schedule.yaml (default: ~/Documents/toefl-prep).
+# If missing, offers to scaffold one (interactive) or exits with a hint.
 
 set -uo pipefail
 
@@ -16,16 +17,42 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck source=config.sh
 . "$SCRIPT_DIR/config.sh"
 
-SCHEDULE="${TOEFL_VAULT_DIR}/schedule.yaml"
+mkdir -p "$TOEFL_DATA_DIR"
+SCHEDULE="${TOEFL_DATA_DIR}/schedule.yaml"
+TEMPLATE="${SCRIPT_DIR}/../skills/toefl/schedule.example.yaml"
 
+# If schedule.yaml is missing, offer to scaffold one interactively (when a TTY
+# is available) or exit with a clear hint (non-interactive / CI).
 if [[ ! -f "$SCHEDULE" ]]; then
-  cat >&2 <<EOF
+  if [[ -t 0 ]]; then
+    cat >&2 <<EOF
+schedule.yaml not found at:
+  $SCHEDULE
+
+Default data dir: ~/Documents/toefl-prep (override with TOEFL_DATA_DIR).
+
+Scaffold one now from the template? [Y/n]
+EOF
+    read -r answer </dev/tty
+    if [[ "${answer:-Y}" =~ ^[Yy]?$ ]]; then
+      cp "$TEMPLATE" "$SCHEDULE"
+      echo "Created: $SCHEDULE" >&2
+      echo "Edit it (start_date, test_window_*, study_days, hours, target_score, weeks), then re-run." >&2
+      echo "Then open: \$EDITOR \"\$SCHEDULE\"" >&2
+    else
+      echo "Aborted. Create it manually: cp \"$TEMPLATE\" \"$SCHEDULE\"" >&2
+    fi
+    exit 2
+  else
+    cat >&2 <<EOF
 ERROR: schedule.yaml not found at $SCHEDULE
-Copy the template and edit it:
-  cp "${SCRIPT_DIR}/../skills/toefl/schedule.example.yaml" "$SCHEDULE"
+Default data dir: ~/Documents/toefl-prep (override with TOEFL_DATA_DIR).
+Create it:
+  cp "$TEMPLATE" "$SCHEDULE"
 Then set start_date, test_window_start, study_days, hours, and weekly goals.
 EOF
-  exit 2
+    exit 2
+  fi
 fi
 
 mode="${1:-all}"

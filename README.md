@@ -69,15 +69,15 @@ Scripts auto-select models (qwen2.5:7b preferred, llama3.1:8b fallback) and surf
 
 ## Set your schedule
 
-On first run, create your plan from the template:
+Data lives in your OS Documents folder by default (`~/Documents/toefl-prep/`); override with `TOEFL_DATA_DIR`.
+
+On first run, `roadmap.sh` **asks** before creating `schedule.yaml` (it never auto-writes):
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
-# edit: start_date, test_window_*, study_days, hours, target_score, weeks
+scripts/roadmap.sh all          # prompts: "Scaffold schedule.yaml? [Y/n]"
 ```
 
-Everything the roadmap shows comes from `schedule.yaml`.
+Answer `Y` to scaffold from the template, then edit `schedule.yaml` (start_date, test_window_*, study_days, hours, target_score, weeks). Everything the roadmap shows comes from that file.
 
 ## Usage (Claude Code)
 

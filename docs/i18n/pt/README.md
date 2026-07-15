@@ -73,8 +73,8 @@ Os scripts selecionam o modelo automaticamente (priorizando qwen2.5:7b, com fall
 Na primeira execução, o plano é gerado a partir do template:
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
+DATA="${TOEFL_DATA_DIR:-$HOME/Documents/toefl-prep}"
+cp skills/toefl/schedule.example.yaml "$DATA/schedule.yaml"
 # Edite: start_date, test_window_*, study_days, hours, target_score, weeks
 ```
 

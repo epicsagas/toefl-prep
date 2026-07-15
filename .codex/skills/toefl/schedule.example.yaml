@@ -1,7 +1,7 @@
 # TOEFL study schedule — user-editable.
 # This is the single source of truth for /toefl-roadmap and /toefl-status.
 # Edit the dates, days, hours, and weekly goals to fit your plan.
-# Path: ${TOEFL_VAULT_DIR}/schedule.yaml (default: ~/workspace/SecondBrain/01-Projects/toefl/schedule.yaml)
+# Path: ${TOEFL_DATA_DIR}/schedule.yaml (default: ~/Documents/toefl-prep/schedule.yaml)
 
 # --- Timeline (ISO dates) ---
 start_date: "2026-07-15"      # first study day (Week 1 day 1)

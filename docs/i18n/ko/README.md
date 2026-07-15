@@ -71,15 +71,15 @@ pip3 install pyyaml
 
 ## 학습 일정 설정
 
-최초 실행 시 템플릿에서 계획 생성:
+데이터 기본 위치는 OS 문서 폴더(`~/Documents/toefl-prep/`). 환경변수 `TOEFL_DATA_DIR`로 변경 가능.
+
+최초 실행 시 `roadmap.sh`가 schedule.yaml 생성 여부를 **물어본다** (자동 덮어쓰기 없음):
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
-# 편집: start_date, test_window_*, study_days, hours, target_score, weeks
+scripts/roadmap.sh all          # "schedule.yaml을 생성할까요? [Y/n]" 프롬프트
 ```
 
-로드맵에 표시되는 모든 값은 `schedule.yaml`에서 온다.
+`Y`로 응답하면 템플릿에서 생성 후 `schedule.yaml`을 편집 (start_date, test_window_*, study_days, hours, target_score, weeks). 로드맵에 표시되는 모든 값은 이 파일에서 온다.
 
 ## 사용 (Claude Code)
 

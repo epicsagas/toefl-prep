@@ -27,7 +27,17 @@ jobs:
           for f in scripts/*.sh; do bash -n "$f" && echo "OK: $f"; done
       - name: Roadmap dry-run
         run: |
-          mkdir -p /tmp/vault
-          cp skills/toefl/schedule.example.yaml /tmp/vault/schedule.yaml
-          TOEFL_VAULT_DIR=/tmp/vault scripts/roadmap.sh all 2026-07-15
-          TOEFL_VAULT_DIR=/tmp/vault scripts/roadmap.sh json 2026-07-22 | python3 -c "import json,sys; json.load(sys.stdin)"
+          mkdir -p /tmp/data
+          cp skills/toefl/schedule.example.yaml /tmp/data/schedule.yaml
+          TOEFL_DATA_DIR=/tmp/data scripts/roadmap.sh all 2026-07-15
+          TOEFL_DATA_DIR=/tmp/data scripts/roadmap.sh json 2026-07-22 | python3 -c "import json,sys; json.load(sys.stdin)"
+      - name: Init guard (no auto-write without consent)
+        run: |
+          rm -rf /tmp/empty && mkdir -p /tmp/empty
+          set +e
+          TOEFL_DATA_DIR=/tmp/empty scripts/roadmap.sh all 2026-07-15 </dev/null >/tmp/out 2>&1
+          code=$?
+          cat /tmp/out
+          test "$code" -eq 2
+          ! test -f /tmp/empty/schedule.yaml   # must NOT auto-create
+          echo "OK: missing-schedule exits 2 without writing"

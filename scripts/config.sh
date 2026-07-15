@@ -35,8 +35,28 @@ TOEFL_WHISPER_BIN="${TOEFL_WHISPER_BIN:-whisper-cli}"
 # --- Paths ---
 PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TOEFL_RUBRICS_DIR="${PLUGIN_ROOT}/rubrics"
-TOEFL_VAULT_DIR="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-TOEFL_PRACTICE_DIR="${TOEFL_VAULT_DIR}/practice"
+
+# toefl_docs_dir: resolve the OS Documents folder (XDG on Linux, ~/Documents on macOS).
+toefl_docs_dir() {
+  # XDG_DOCUMENTS_DIR if defined (e.g. "$HOME/Documents"); fall back to ~/Documents.
+  if [[ -n "${XDG_DOCUMENTS_DIR:-}" ]]; then
+    echo "${XDG_DOCUMENTS_DIR/#\$HOME/$HOME}"
+  else
+    echo "$HOME/Documents"
+  fi
+}
+
+# Data dir default: <Documents>/toefl-prep. Override via TOEFL_DATA_DIR.
+# (TOEFL_VAULT_DIR kept as a deprecated alias for backward compat.)
+if [[ -n "${TOEFL_DATA_DIR:-}" ]]; then
+  TOEFL_DATA_DIR="$TOEFL_DATA_DIR"
+elif [[ -n "${TOEFL_VAULT_DIR:-}" ]]; then
+  TOEFL_DATA_DIR="$TOEFL_VAULT_DIR"   # legacy override
+else
+  TOEFL_DATA_DIR="$(toefl_docs_dir)/toefl-prep"
+fi
+export TOEFL_DATA_DIR
+TOEFL_PRACTICE_DIR="${TOEFL_DATA_DIR}/practice"
 
 set +o allexport
 

@@ -73,8 +73,8 @@ pip3 install pyyaml
 При первом запуске план создаётся из шаблона:
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-cp skills/toefl/schedule.example.yaml "$VAULT/schedule.yaml"
+DATA="${TOEFL_DATA_DIR:-$HOME/Documents/toefl-prep}"
+cp skills/toefl/schedule.example.yaml "$DATA/schedule.yaml"
 # Отредактируйте: start_date, test_window_*, study_days, hours, target_score, weeks
 ```
 

@@ -12,10 +12,10 @@ disable-model-invocation: true
 ## 데이터 소스
 
 ```bash
-VAULT="${TOEFL_VAULT_DIR:-$HOME/workspace/SecondBrain/01-Projects/toefl}"
-JOURNAL="$VAULT/JOURNAL.md"
-SCORES="$VAULT/SCORES.md"
-PROGRESS="$VAULT/PROGRESS.md"
+DATA="${TOEFL_DATA_DIR:-$HOME/Documents/toefl-prep}"
+JOURNAL="$DATA/JOURNAL.md"
+SCORES="$DATA/SCORES.md"
+PROGRESS="$DATA/PROGRESS.md"
 PLUGIN=~/.claude/plugins/marketplaces/toefl
 ```
 
