@@ -19,22 +19,31 @@ Grade Reading / Listening / Speaking / Writing with no external API — question
 
 ## Install
 
+All three hosts install from the same GitHub marketplace (`epicsagas/toefl-prep`).
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-Clone into the host's plugin directory:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> Prerequisites (PyYAML for the roadmap) are not auto-installed by Codex/agy (no SessionStart hook).
+> Run `pip3 install pyyaml` before first use if roadmap features are needed.
 
 ## Prerequisites
 

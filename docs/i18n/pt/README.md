@@ -21,22 +21,30 @@ Da geração de questões até a correção e o acompanhamento de pontuação, t
 
 ## Instalação
 
+Todos os três hosts instalam a partir do mesmo marketplace do GitHub (epicsagas/toefl-prep).
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-Faça o clone no diretório de plugins de cada host:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> Os pré-requisitos (PyYAML para a trilha de estudos) não são instalados automaticamente pelo Codex/agy (sem hook de SessionStart). Execute `pip3 install pyyaml` antes do primeiro uso, caso necessite dos recursos da trilha de estudos.
 
 ## Pré-requisitos
 
