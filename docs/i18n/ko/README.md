@@ -21,22 +21,31 @@
 
 ## 설치
 
+세 호스트 모두 동일한 GitHub 마켓플레이스(`epicsagas/toefl-prep`)에서 설치한다.
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-각 호스트의 플러그인 디렉토리에 clone:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> 필수 의존성(PyYAML, 로드맵용)은 Codex/agy가 자동 설치하지 않는다(SessionStart 훅 없음).
+> 로드맵 기능이 필요하면 최초 사용 전 `pip3 install pyyaml`을 실행한다.
 
 ## 사전 요구사항
 

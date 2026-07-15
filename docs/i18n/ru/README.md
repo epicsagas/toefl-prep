@@ -21,22 +21,30 @@
 
 ## Установка
 
+Все три хоста устанавливаются из одного и того же маркетплейса GitHub (epicsagas/toefl-prep).
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-Клонируйте в каталог плагинов соответствующего хоста:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> Предварительные зависимости (PyYAML для учебного маршрута) не устанавливаются автоматически в Codex/agy (хук SessionStart отсутствует). Выполните `pip3 install pyyaml` перед первым использованием, если нужны функции учебного маршрута.
 
 ## Системные требования
 

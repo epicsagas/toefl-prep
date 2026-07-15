@@ -21,22 +21,30 @@
 
 ## 安装
 
+三个宿主均从同一个 GitHub 市场 (epicsagas/toefl-prep) 安装。
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-克隆到各宿主的插件目录:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> 前置条件 (路线图所需 PyYAML) 不会被 Codex/agy 自动安装 (无 SessionStart 钩子)。如需路线图功能，请在首次使用前运行 `pip3 install pyyaml`。
 
 ## 前置条件
 

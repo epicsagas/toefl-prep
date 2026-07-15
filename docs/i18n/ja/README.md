@@ -21,22 +21,30 @@
 
 ## インストール
 
+3つのホストすべてで同じ GitHub マーケットプレース (epicsagas/toefl-prep) からインストールする。
+
 ### Claude Code
 
 ```bash
-/plugin marketplace add epicsagas/toefl-prep
-/plugin install toefl-prep@epicsagas
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@epicsagas
 ```
 
-### Codex / agy
-
-各ホストのプラグインディレクトリに clone:
+### Codex
 
 ```bash
-git clone https://github.com/epicsagas/toefl-prep
-# Codex: ~/.codex/plugins/toefl-prep -> clone
-# agy:   ~/.agy/plugins/toefl-prep -> clone
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@epicsagas
 ```
+
+### agy (Antigravity CLI)
+
+```bash
+agy plugin install epicsagas/toefl-prep
+agy plugin enable toefl-prep
+```
+
+> 前提条件 (ロードマップ用 PyYAML) は Codex/agy では自動インストールされない (SessionStart フックなし)。ロードマップ機能が必要な場合は、初回使用前に `pip3 install pyyaml` を実行すること。
 
 ## 前提条件
 
