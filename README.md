@@ -19,14 +19,15 @@ Grade Reading / Listening / Speaking / Writing with no external API — question
 
 ## Install
 
-All three hosts install from the same GitHub marketplace (`epicsagas/toefl-prep`).
-
 ### Claude Code
 
 ```bash
 claude plugin marketplace add epicsagas/toefl-prep
 claude plugin install toefl-prep@epicsagas
 ```
+
+> Also available from the `epicsagas/plugins` suite marketplace:
+> `claude plugin marketplace add epicsagas/plugins` then `claude plugin install toefl-prep@epicsagas`.
 
 ### Codex
 
@@ -37,8 +38,10 @@ codex plugin add toefl-prep@epicsagas
 
 ### agy (Antigravity CLI)
 
+agy installs directly from the GitHub repo URL (no `.git` suffix):
+
 ```bash
-agy plugin install epicsagas/toefl-prep
+agy plugin install https://github.com/epicsagas/toefl-prep
 agy plugin enable toefl-prep
 ```
 

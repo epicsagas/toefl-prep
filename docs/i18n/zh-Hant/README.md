@@ -40,7 +40,7 @@ codex plugin add toefl-prep@epicsagas
 ### agy (Antigravity CLI)
 
 ```bash
-agy plugin install epicsagas/toefl-prep
+agy plugin install https://github.com/epicsagas/toefl-prep
 agy plugin enable toefl-prep
 ```
 

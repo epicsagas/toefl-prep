@@ -21,14 +21,15 @@
 
 ## 설치
 
-세 호스트 모두 동일한 GitHub 마켓플레이스(`epicsagas/toefl-prep`)에서 설치한다.
-
 ### Claude Code
 
 ```bash
 claude plugin marketplace add epicsagas/toefl-prep
 claude plugin install toefl-prep@epicsagas
 ```
+
+> `epicsagas/plugins` 스위트 마켓플레이스로도 설치 가능:
+> `claude plugin marketplace add epicsagas/plugins` 후 `claude plugin install toefl-prep@epicsagas`.
 
 ### Codex
 
@@ -39,8 +40,10 @@ codex plugin add toefl-prep@epicsagas
 
 ### agy (Antigravity CLI)
 
+agy는 GitHub 레포 URL로 직접 설치한다 (`.git` 접미사 불필요):
+
 ```bash
-agy plugin install epicsagas/toefl-prep
+agy plugin install https://github.com/epicsagas/toefl-prep
 agy plugin enable toefl-prep
 ```
 
