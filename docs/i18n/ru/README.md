@@ -21,20 +21,20 @@
 
 ## Установка
 
-Все три хоста устанавливаются из одного и того же маркетплейса GitHub (epicsagas/plugins).
+Все три хоста устанавливаются из собственного маркетплейса этого репозитория.
 
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/plugins
-claude plugin install epicsagas@toefl-prep
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@toefl-prep
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/plugins
-codex plugin add epicsagas@toefl-prep
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@toefl-prep
 ```
 
 ### agy (Antigravity CLI)

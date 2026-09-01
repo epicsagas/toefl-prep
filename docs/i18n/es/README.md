@@ -21,20 +21,20 @@ Desde la generación de preguntas hasta la calificación y el seguimiento de pun
 
 ## Instalación
 
-Los tres hosts se instalan desde el mismo marketplace de GitHub (epicsagas/plugins).
+Los tres hosts se instalan desde el marketplace autónomo de este repositorio.
 
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/plugins
-claude plugin install epicsagas@toefl-prep
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@toefl-prep
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/plugins
-codex plugin add epicsagas@toefl-prep
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@toefl-prep
 ```
 
 ### agy (Antigravity CLI)

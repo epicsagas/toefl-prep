@@ -21,20 +21,20 @@
 
 ## 安裝
 
-三個宿主均從同一個 GitHub 市場 (epicsagas/plugins) 安裝。
+三個宿主均從本儲存庫自帶的獨立市集安裝。
 
 ### Claude Code
 
 ```bash
-claude plugin marketplace add epicsagas/plugins
-claude plugin install epicsagas@toefl-prep
+claude plugin marketplace add epicsagas/toefl-prep
+claude plugin install toefl-prep@toefl-prep
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add epicsagas/plugins
-codex plugin add epicsagas@toefl-prep
+codex plugin marketplace add epicsagas/toefl-prep
+codex plugin add toefl-prep@toefl-prep
 ```
 
 ### agy (Antigravity CLI)
