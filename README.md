@@ -19,6 +19,14 @@ Grade Reading / Listening / Speaking / Writing with no external API — question
 
 ## Install
 
+### Grok Build (xAI)
+
+```bash
+grok plugin install epicsagas/toefl-prep --trust
+```
+
+Grok reads skills from `skills/` at the plugin root. No extra configuration needed.
+
 ### Claude Code
 
 ```bash
